@@ -41,14 +41,39 @@ class LebestSIGLPlayer extends Player
         // How can i display the result of each round ? $this->prettyDisplay()
         // -------------------------------------    -----------------------------------------------------
 
-        //Always send back FOE
+        $en_choices = $this->result->getChoicesFor($this->opponentSide);
+        $my_choices = $this->result->getChoicesFor($this->mySide);
+        $last_my = $this->result->getLastChoiceFor($this->mySide);
+        $last_en = $this->result->getLastChoiceFor($this->opponentSide);
+        $my_score = $this->result->getLastScoreFor($this->mySide);
+        $en_score = $this->result->getLastScoreFor($this->opponentSide);
+        $my_last_score = $this->result->getLastScoreFor($this->mySide);
+        $en_last_score = $this->result->getLastScoreFor($this->opponentSide);
+        $round = $this->result->getNbRound();
         //$this->prettyDisplay();
         //printf($this->result->getStats($this->opponentSide));
-        if ($this->result->getLastChoiceFor($this->opponentSide) == parent::foeChoice())
+
+        $always_foe = TRUE;
+        $always_friend = TRUE;
+        for ($x = 0; $x < count($en_choices); $x++ )
         {
-            return parent::foeChoice();
+            if ($en_choices[$x] != parent::foeChoice())
+            {
+                $always_friend = FALSE;
+            }
+            if ($en_choices[$x] != parent::foeChoice())
+            {
+                $always_foe = FALSE;
+            }
         }
-        //Always send back Friend
+        
+        if ($round == 0)
+            return parent::friendChoice();
+        //Always send back FOE
+        if ($always_foe)
+            return parent::foeChoice();
+        if ($always_friend)
+            return parent::foeChoice();
 
         return parent::friendChoice();
     }
