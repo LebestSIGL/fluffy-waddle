@@ -14,6 +14,8 @@ class LebestSIGLPlayer extends Player
     protected $mySide;
     protected $opponentSide;
     protected $result;
+    private $grudge = FALSE;
+    private $count = 0;
 
     public function getChoice()
     {
@@ -67,14 +69,31 @@ class LebestSIGLPlayer extends Player
             }
         }
         
-        if ($round == 0)
-            return parent::friendChoice();
         //Always send back FOE
-        if ($always_foe)
-            return parent::foeChoice();
+        /*if ($always_foe)
+            return parent::foeChoice();*/
         if ($always_friend)
             return parent::foeChoice();
 
+        $last_en = $this->result->getLastChoiceFor($this->opponentSide);
+
+        if ($last_en == parent::foeChoice())
+        {
+            $this->count = 0;
+            $this->grudge = TRUE;
+        }
+
+        if ($this->grudge == TRUE)
+            {
+                $this->count++;
+                if ($this->count > 3)
+                {
+                    $this->count = 0;
+                    $this->grudge = FALSE;
+                    return parent::friendChoice();
+                }
+                return parent::foeChoice();
+            }
         return parent::friendChoice();
     }
  
