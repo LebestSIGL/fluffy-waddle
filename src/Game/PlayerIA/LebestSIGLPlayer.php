@@ -9,7 +9,7 @@ use Hackathon\Game\Result;
  * @package Hackathon\PlayerIA
  * @author LouisFrancoisS
  */
-class LebestsiglPlayer extends Player
+class LebestSIGLPlayer extends Player
 {
     protected $mySide;
     protected $opponentSide;
@@ -42,6 +42,8 @@ class LebestsiglPlayer extends Player
         // -------------------------------------    -----------------------------------------------------
 
         //Always send back FOE
+        //$this->prettyDisplay();
+        //printf($this->result->getStats($this->opponentSide));
         if ($this->result->getLastChoiceFor($this->opponentSide) == parent::foeChoice())
         {
             return parent::foeChoice();
