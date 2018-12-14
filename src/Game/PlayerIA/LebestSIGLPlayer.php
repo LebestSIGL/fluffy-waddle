@@ -74,16 +74,24 @@ class LebestSIGLPlayer extends Player
             return parent::friendChoice();*/
         if ($always_friend)
             return parent::foeChoice();
-
-        if ($round == 0)
-            $this->grudge = FALSE;   
-
-        if ($last_en == parent::foeChoice())
-            $this->grudge = TRUE;
-
+            if ($last_en == parent::foeChoice())
+            {
+                $this->count = 0;
+                $this->grudge = TRUE;
+            }
+    
         if ($this->grudge == TRUE)
-            return parent::foeChoice();
+            {
+                $this->count++;
+                if ($this->count > 2)
+                {
+                    $this->count = 0;
+                    $this->grudge = FALSE;
+                    return parent::friendChoice();
+                }
+                return parent::foeChoice();
+            }
         return parent::friendChoice();
+
         }
- 
-};
+}
