@@ -59,7 +59,7 @@ class LebestSIGLPlayer extends Player
         $always_friend = TRUE;
         for ($x = 0; $x < count($en_choices); $x++ )
         {
-            if ($en_choices[$x] != parent::foeChoice())
+            if ($en_choices[$x] != parent::friendChoice())
             {
                 $always_friend = FALSE;
             }
@@ -71,30 +71,19 @@ class LebestSIGLPlayer extends Player
         
         //Always send back FOE
         /*if ($always_foe)
-            return parent::foeChoice();*/
+            return parent::friendChoice();*/
         if ($always_friend)
             return parent::foeChoice();
 
-        $last_en = $this->result->getLastChoiceFor($this->opponentSide);
+        if ($round == 0)
+            $this->grudge = FALSE;   
 
         if ($last_en == parent::foeChoice())
-        {
-            $this->count = 0;
             $this->grudge = TRUE;
-        }
 
         if ($this->grudge == TRUE)
-            {
-                $this->count++;
-                if ($this->count > 3)
-                {
-                    $this->count = 0;
-                    $this->grudge = FALSE;
-                    return parent::friendChoice();
-                }
-                return parent::foeChoice();
-            }
+            return parent::foeChoice();
         return parent::friendChoice();
-    }
+        }
  
 };

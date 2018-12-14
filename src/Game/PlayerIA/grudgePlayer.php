@@ -18,6 +18,9 @@ class grudgePlayer extends Player
 
     public function getChoice()
     {
+        $round = $this->result->getNbRound();
+        if ($round == 0)
+            $this->grudge = FALSE;   
         $last_en = $this->result->getLastChoiceFor($this->opponentSide);
 
         if ($last_en == parent::foeChoice())

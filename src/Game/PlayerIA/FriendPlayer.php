@@ -41,7 +41,7 @@ class FriendPlayer extends Player
         // How can i display the result of each round ? $this->prettyDisplay()
         // -------------------------------------    -----------------------------------------------------
  
-        return parent::foeChoice();
+        return parent::friendChoice();
     }
  
 };
